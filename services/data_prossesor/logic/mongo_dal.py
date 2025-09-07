@@ -4,9 +4,10 @@ from pymongo.errors import DuplicateKeyError
 import services.data_prossesor.config as conf
 import pathlib
 from gridfs import GridFSBucket
+from gridfs.errors import FileExists
 import os
-from pydub import AudioSegment
-from io import BytesIO
+# from pydub import AudioSegment
+# from io import BytesIO
 
 
 class MongoDal:
@@ -21,18 +22,20 @@ class MongoDal:
 
     def insert_file(self, metadata, file_id):
         audio_file_path = pathlib.Path(metadata['File_path'])
-
-        with MongoClient(self.uri) as client:
-            self.db = client[self.database]
-            # Initialize GridFSBucket
-            fs = GridFSBucket(self.db)
-            with open(audio_file_path, 'rb') as audio_file:
-                fs.upload_from_stream_with_id(
-                    file_id=file_id,
-                    filename=audio_file_path.name,
-                    source=audio_file,
-                    metadata=metadata
-                )
+        try:
+            with MongoClient(self.uri) as client:
+                self.db = client[self.database]
+                # Initialize GridFSBucket
+                fs = GridFSBucket(self.db)
+                with open(audio_file_path, 'rb') as audio_file:
+                    fs.upload_from_stream_with_id(
+                        file_id=file_id,
+                        filename=audio_file_path.name,
+                        source=audio_file,
+                        metadata=metadata
+                    )
+        except FileExists as e:
+            print(f"the file already exists: {e}")
 
 
 

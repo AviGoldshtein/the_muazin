@@ -9,3 +9,6 @@ docker run -d --name muazin-kafka -p 9092:9092 apache/kafka:latest
 
 @REM run mongo
 docker run -d --name muazin-mongo -p 27017:27017 mongo:latest
+
+@REM run elastic search
+docker run -d --name es -p 9200:9200 -e "discovery.type=single-node" -e "xpack.security.enabled=false" -e "ES_JAVA_OPTS=-Xms1g -Xmx1g" docker.elastic.co/elasticsearch/elasticsearch:8.15.0
