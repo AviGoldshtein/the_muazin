@@ -12,7 +12,7 @@ class Manager:
         self.collection_name = conf.COLLECTION_NAME
         self.processor = Processor()
         # self.es_connector = ElasticConnector()
-        # self.mongo_dal = MongoDal()
+        self.mongo_dal = MongoDal()
 
     def run(self):
         events = Consumer.get_consumer_events(self.consuming_topic)
@@ -23,5 +23,5 @@ class Manager:
             print(metadata)
             unique_id = self.processor.generate_id(metadata['File_name'])
             # self.es_connector.insert_document(index_name=self.index_name, id=unique_id, doc=metadata)
-            # self.mongo_dal.insert_file(collection_name=self.collection_name, file_path=metadata['File_path'])
+            self.mongo_dal.insert_file(metadata=metadata, file_id=unique_id)
 
