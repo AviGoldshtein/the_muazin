@@ -1,5 +1,6 @@
 from pathlib import Path
 import datetime
+from dateutil import parser
 
 
 class MetaExtractor:
@@ -10,6 +11,10 @@ class MetaExtractor:
             "File_path": str(file_path),
             "File_size": file_stats.st_size,
             "File_name": file_path.name,
-            "Creation_time": str(datetime.datetime.fromtimestamp(file_stats.st_ctime))
+            "Creation_time": self._proper_date(str(datetime.datetime.fromtimestamp(file_stats.st_ctime)))
         }
         return metadata
+
+    def _proper_date(self, date: str) -> str:
+        dt = parser.parse(date)
+        return dt.isoformat()

@@ -1,13 +1,9 @@
 from pymongo import MongoClient
-from bson.objectid import ObjectId
-from pymongo.errors import DuplicateKeyError
 import services.data_prossesor.config as conf
 import pathlib
 from gridfs import GridFSBucket
 from gridfs.errors import FileExists
-import os
-# from pydub import AudioSegment
-# from io import BytesIO
+import logging
 
 
 class MongoDal:
@@ -19,14 +15,15 @@ class MongoDal:
         self.db = None
         self.database = conf.MONGO_DB
         self.uri = conf.MONGO_URI
+        self.logger = logging.getLogger(__name__)
 
     def insert_file(self, metadata, file_id):
         audio_file_path = pathlib.Path(metadata['File_path'])
         try:
             with MongoClient(self.uri) as client:
                 self.db = client[self.database]
-                # Initialize GridFSBucket
                 fs = GridFSBucket(self.db)
+
                 with open(audio_file_path, 'rb') as audio_file:
                     fs.upload_from_stream_with_id(
                         file_id=file_id,
@@ -34,25 +31,6 @@ class MongoDal:
                         source=audio_file,
                         metadata=metadata
                     )
+                self.logger.info(f"inserted file: '{metadata['File_name']}'")
         except FileExists as e:
-            print(f"the file already exists: {e}")
-
-
-
-    # def read_file(self, file_id, pydub=None):
-    #     with MongoClient(self.uri) as client:
-    #         self.db = client[self.database]
-    #         fs = GridFSBucket(self.db)
-    #         fs.download_to_stream(
-    #             file_id=file_id,
-    #             destination="temp.wav"
-    #         )
-    #         file_id = ObjectId(file_id)  # Replace with the actual _id of your audio file
-    #         grid_out = fs.open_download_stream(file_id)
-    #         audio_data = grid_out.read()
-    #         with open('downloaded_audio.wav', 'wb') as f:
-    #             f.write(audio_data)
-    #
-    #             audio_segment = AudioSegment.from_file(BytesIO(audio_data))
-    #             # Now you can play, modify, or export the audio_segment
-
+            self.logger.error(f"{e}, filename: '{metadata['File_name']}'")
