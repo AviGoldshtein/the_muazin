@@ -18,7 +18,8 @@ class ElasticConnector:
                 'File_path': {'type': 'keyword'},
                 'File_size': {'type': 'integer'},
                 'File_name': {'type': 'text'},
-                'Creation_time': {'type': 'date'}
+                'Creation_time': {'type': 'date'},
+                'text': {'type': 'text'}
             }
         }
         if not self.es.indices.exists(index=index_name):

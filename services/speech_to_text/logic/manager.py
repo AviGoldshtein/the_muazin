@@ -14,6 +14,8 @@ class Manager:
         events = Consumer.get_consumer_events(self.consumption_topic)
 
         for event in events:
+            print("a new event had been received.")
             metadata = event.value
-            metadata_with_text = self.convertor.speech_to_text(file_path=metadata['File_path'])
-            self.producer.publish_event(self.publishing_topic, metadata_with_text)
+            metadata['text'] = self.convertor.speech_to_text(file_path=metadata['File_path'])
+            print(metadata['text'])
+            self.producer.publish_event(self.publishing_topic, metadata)
