@@ -6,6 +6,12 @@ from services.data_loader_src.logic.logger import Logger
 
 class Manager:
     def __init__(self, producing_topic):
+        """
+        manager initialization with instances of
+        DataLoader, MetaExtractor and Producer.
+
+        :param producing_topic: the kafka topic to produce.
+        """
         self.producing_topic = producing_topic
         self.data_loader = DataLoader()
         self.meta_extractor = MetaExtractor()
@@ -13,6 +19,10 @@ class Manager:
         self.logger = Logger.get_logger(name=__name__)
 
     def run(self):
+        """
+        fetch all the files, extract metadata
+        for each file and upload them to kafka.
+        """
         self.logger.info("starting the process...")
         files = self.data_loader.list_fils()
         for file in files:
