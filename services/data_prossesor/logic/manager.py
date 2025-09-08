@@ -2,7 +2,7 @@ from services.data_prossesor.logic.consumer import Consumer
 from services.data_prossesor.logic.elastic_dal import ElasticConnector
 from services.data_prossesor.logic.processor import Processor
 from services.data_prossesor.logic.mongo_dal import MongoDal
-import logging
+from services.data_prossesor.logic.logger import Logger
 
 
 class Manager:
@@ -19,7 +19,7 @@ class Manager:
         self.processor = Processor()
         self.es_connector = ElasticConnector()
         self.mongo_dal = MongoDal()
-        self.logger = logging.getLogger(__name__)
+        self.logger = Logger.get_logger(name=__name__)
 
 
     def run(self):
@@ -28,6 +28,7 @@ class Manager:
         and insert every file to mongo,
         then index it to elastic search.
         """
+        self.logger.info(f"started listening to new events of topic {self.consuming_topic}.")
         self.es_connector.create_index_and_mapping_if_not_exist(index_name=self.index_name)
         events = Consumer.get_consumer_events(self.consuming_topic)
 

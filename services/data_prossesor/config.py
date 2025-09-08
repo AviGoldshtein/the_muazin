@@ -7,6 +7,7 @@ KAFKA_BOOTSTRAP = os.getenv("KAFKA_BOOTSTRAP", "localhost:9092")
 
 # elasticsearch
 INDEX_NAME = "muazin"
+INDEX_LOGS = "muazin-logs"
 ELASTIC_URI = os.getenv("ELASTIC_URI", "http://localhost:9200")
 
 # mongo

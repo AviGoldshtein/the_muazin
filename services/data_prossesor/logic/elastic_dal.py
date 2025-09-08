@@ -1,12 +1,12 @@
 from elasticsearch import Elasticsearch
 import services.data_prossesor.config as conf
-import logging
+from services.data_prossesor.logic.logger import Logger
 
 
 class ElasticConnector:
     def __init__(self):
         self.es = Elasticsearch(conf.ELASTIC_URI)
-        self.logger = logging.getLogger(__name__)
+        self.logger = Logger.get_logger(name=__name__)
 
     def create_index_and_mapping_if_not_exist(self, index_name: str):
         """
@@ -33,3 +33,4 @@ class ElasticConnector:
         :param metadata: what to index.
         """
         self.es.index(index=index_name, id=id, document=metadata)
+        self.logger.info(f"file with id: {id} indexed.")
