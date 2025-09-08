@@ -14,4 +14,5 @@ docker run -d --name muazin-mongo -p 27017:27017 mongo:latest
 docker run -d --name muazin-es --network muazin-net -p 9200:9200 -e "discovery.type=single-node" -e "xpack.security.enabled=false" -e "ES_JAVA_OPTS=-Xms1g -Xmx1g" docker.elastic.co/elasticsearch/elasticsearch:8.15.0
 
 @REM run kibana
-docker run --name muazin-kibana --network muazin-net -p 5601:5601 docker.elastic.co/kibana/kibana:9.1.3
+docker run --name muazin-kibana --network muazin-net -e "ELASTICSEARCH_HOSTS=http://muazin-es:9200" -p 5601:5601 docker.elastic.co/kibana/kibana:8.15.0
+
