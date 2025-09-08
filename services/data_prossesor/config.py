@@ -1,7 +1,7 @@
 import os
 
 #kafka
-CONSUMING_TOPIC_DATA_PROCESSOR = "loaded_with_meta"
+CONSUMING_TOPIC_DATA_PROCESSOR = "loaded_with_text"
 CONSUMING_GROUP_ID_DATA_PROCESSOR = "data-processor"
 KAFKA_BOOTSTRAP = os.getenv("KAFKA_BOOTSTRAP", "localhost:9092")
 
