@@ -1,6 +1,13 @@
 from services.speech_to_text.logic.manager import Manager
+import services.speech_to_text.config as conf
 
 
 def main():
-    manager = Manager()
+    manager = Manager(
+        consumption_topic=conf.CONSUME_TOPIC,
+        publishing_topic=conf.PUBLISH_TOPIC
+    )
     manager.run()
+
+if __name__ == "__main__":
+    main()
