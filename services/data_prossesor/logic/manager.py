@@ -6,10 +6,16 @@ import logging
 
 
 class Manager:
-    def __init__(self, consuming_topic, index_name, collection_name):
+    def __init__(self, consuming_topic, index_name):
+        """
+        manager initialization with instances of
+        Processor, ElasticConnector, MongoDal and Logger.
+
+        :param consuming_topic: the kafka consumption topic.
+        :param index_name: the name to index in elastic.
+        """
         self.consuming_topic = consuming_topic
         self.index_name = index_name
-        self.collection_name = collection_name
         self.processor = Processor()
         self.es_connector = ElasticConnector()
         self.mongo_dal = MongoDal()
@@ -17,6 +23,11 @@ class Manager:
 
 
     def run(self):
+        """
+        start listening to the kafka topic,
+        and insert every file to mongo,
+        then index it to elastic search.
+        """
         self.es_connector.create_index_and_mapping_if_not_exist(index_name=self.index_name)
         events = Consumer.get_consumer_events(self.consuming_topic)
 

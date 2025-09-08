@@ -10,9 +10,9 @@ logging.basicConfig(
 
 
 def main():
+    """initialize the manager and run server"""
     manager = Manager(consuming_topic=conf.CONSUMING_TOPIC_DATA_PROCESSOR,
-                      index_name=conf.INDEX_NAME,
-                      collection_name=conf.COLLECTION_NAME)
+                      index_name=conf.INDEX_NAME)
     manager.run()
 
 

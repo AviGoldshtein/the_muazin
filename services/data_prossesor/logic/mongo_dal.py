@@ -18,6 +18,13 @@ class MongoDal:
         self.logger = logging.getLogger(__name__)
 
     def insert_file(self, metadata, file_id):
+        """
+        insert a file into mongo,
+        use the file_id to determine the _id in the mongo collection.
+
+        :param metadata: the details of the file to attach.
+        :param file_id: a unique str id
+        """
         audio_file_path = pathlib.Path(metadata['File_path'])
         try:
             with MongoClient(self.uri) as client:

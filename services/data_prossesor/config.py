@@ -10,6 +10,5 @@ INDEX_NAME = "muazin"
 ELASTIC_URI = os.getenv("ELASTIC_URI", "http://localhost:9200")
 
 # mongo
-COLLECTION_NAME = "muazin_coll"
 MONGO_DB = os.getenv("MONGO_DB", "mydb")
 MONGO_URI = os.getenv("MONGO_URI", "mongodb://localhost:27017")

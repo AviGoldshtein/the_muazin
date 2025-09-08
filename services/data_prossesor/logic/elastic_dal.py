@@ -8,7 +8,11 @@ class ElasticConnector:
         self.es = Elasticsearch(conf.ELASTIC_URI)
         self.logger = logging.getLogger(__name__)
 
-    def create_index_and_mapping_if_not_exist(self, index_name):
+    def create_index_and_mapping_if_not_exist(self, index_name: str):
+        """
+        create an index with mapping if it doesn't exist.
+        :param index_name: the name of the index.
+        """
         mapping = {
             'properties': {
                 'File_path': {'type': 'keyword'},
@@ -22,4 +26,10 @@ class ElasticConnector:
             self.logger.info(f"index {index_name} created.")
 
     def index_file(self, index_name, id, metadata):
+        """
+        index the metadata of a file.
+        :param index_name: the index name to index to.
+        :param id: the id for compatibility with mongo.
+        :param metadata: what to index.
+        """
         self.es.index(index=index_name, id=id, document=metadata)
