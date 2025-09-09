@@ -28,3 +28,12 @@ class ElasticConnector:
             self.logger.info(f"updated with the new fields successfully for file: {file_id}.")
         except NotFoundError as e:
             self.logger.error(f"{e}")
+
+    def get_text_from(self, index_name: str ,file_id: str) -> str | None:
+        try:
+            res = self.es.get(index=index_name ,id=file_id)
+            return res['_source'].get("Transcription", None)
+
+        except NotFoundError as e:
+            self.logger.error(f"{e}")
+            return None
