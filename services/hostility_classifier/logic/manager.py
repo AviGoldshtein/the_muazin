@@ -1,5 +1,6 @@
 from services.hostility_classifier.logic.consumer import Consumer
 from services.hostility_classifier.logic.elastic_dal import ElasticConnector
+from services.hostility_classifier.logic.classifier import Classifier
 
 
 class Manager:
@@ -7,6 +8,7 @@ class Manager:
         self.consuming_topic = consuming_topic
         self.index_name = index_name
         self.es_connector = ElasticConnector()
+        self.classifier = Classifier()
 
     def run(self):
         events = Consumer.get_consumer_events(self.consuming_topic)
@@ -17,10 +19,9 @@ class Manager:
 
             text = self.es_connector.get_text_from(index_name=self.index_name, file_id=file_id)
             if text:
-
-                bds_percent = 69
-                is_bds = True
-                bds_threat_level = "medium" or "high" or "none"
+                bds_percent = self.classifier.calculate_bds_percent(text) # a number 0 / 100
+                is_bds = self.classifier.decide_is_bds(bds_percent) # True / False
+                bds_threat_level = self.classifier.classify_bds_threat_level(bds_percent, is_bds) # "medium" / "high" / "none"
 
                 new_fields = {
                     "bds_percent": bds_percent,

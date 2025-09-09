@@ -4,7 +4,7 @@ import pathlib
 
 class Extractor:
     def __init__(self):
-        self.black_lists_path = pathlib.Path(__file__).parent / "black_lists"
+        self.__black_lists_path = pathlib.Path(__file__).parent / "black_lists"
 
     def get_extracted_high_hostility_expressions(self) -> list:
         return self._open_and_extract_file("high_hostility.txt")
@@ -13,7 +13,7 @@ class Extractor:
         return self._open_and_extract_file("low_hostility.txt")
 
     def _open_and_extract_file(self, file_name: str) -> list:
-        file_path = self.black_lists_path / file_name
+        file_path = self.__black_lists_path / file_name
         with open(file_path, mode="r", encoding="utf-8") as f:
             encoded_wors_str = f.read()
             decoded_words_str = self._extractBase64(encoded_wors_str)
