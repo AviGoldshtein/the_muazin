@@ -8,6 +8,7 @@ def main():
     logger = Logger.get_logger(name="processor")
     logger.info("data processor started...")
     manager = Manager(consuming_topic=conf.CONSUMING_TOPIC_DATA_PROCESSOR,
+                      producing_topic=conf.PRODUCING_TOPIC_DATA_PROCESSOR,
                       index_name=conf.INDEX_NAME)
     manager.run()
 

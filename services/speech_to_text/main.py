@@ -4,8 +4,7 @@ import services.speech_to_text.config as conf
 
 def main():
     manager = Manager(
-        consumption_topic=conf.CONSUME_TOPIC,
-        publishing_topic=conf.PUBLISH_TOPIC
+        consumption_topic=conf.CONSUME_TOPIC
     )
     manager.run()
 

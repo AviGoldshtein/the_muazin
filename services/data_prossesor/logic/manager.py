@@ -2,23 +2,26 @@ from services.data_prossesor.logic.consumer import Consumer
 from services.data_prossesor.logic.elastic_dal import ElasticConnector
 from services.data_prossesor.logic.processor import Processor
 from services.data_prossesor.logic.mongo_dal import MongoDal
+from services.data_prossesor.logic.producer import Producer
 from services.data_prossesor.logic.logger import Logger
 
 
 class Manager:
-    def __init__(self, consuming_topic, index_name):
+    def __init__(self, consuming_topic, producing_topic, index_name):
         """
         manager initialization with instances of
-        Processor, ElasticConnector, MongoDal and Logger.
+        Processor, ElasticConnector, Producer, MongoDal and Logger.
 
         :param consuming_topic: the kafka consumption topic.
         :param index_name: the name to index in elastic.
         """
         self.consuming_topic = consuming_topic
+        self.producing_topic = producing_topic
         self.index_name = index_name
         self.processor = Processor()
         self.es_connector = ElasticConnector()
         self.mongo_dal = MongoDal()
+        self.producer = Producer()
         self.logger = Logger.get_logger(name=__name__)
 
 
@@ -38,3 +41,4 @@ class Manager:
             unique_id = self.processor.generate_id(metadata['File_name'] + metadata['Creation_time'])
             self.mongo_dal.insert_file(metadata=metadata, file_id=unique_id)
             self.es_connector.index_file(index_name=self.index_name, id=unique_id, metadata=metadata)
+            self.producer.publish_event(self.producing_topic, event={"file_id": unique_id})
