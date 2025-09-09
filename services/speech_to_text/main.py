@@ -9,6 +9,7 @@ def main():
     logger.info("speech to text started...")
     manager = Manager(
         consumption_topic=conf.CONSUME_TOPIC,
+        publication_topic=conf.PUBLISH_TOPIC,
         index_name=conf.INDEX_NAME
     )
     manager.run()

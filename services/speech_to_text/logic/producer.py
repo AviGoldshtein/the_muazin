@@ -1,6 +1,6 @@
 from kafka import KafkaProducer
-from services.data_prossesor import config
-from services.data_prossesor.logic.logger import Logger
+from services.speech_to_text import config
+from services.speech_to_text.logic.logger import Logger
 import json
 
 
