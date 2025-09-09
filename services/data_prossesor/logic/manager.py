@@ -13,6 +13,7 @@ class Manager:
         Processor, ElasticConnector, Producer, MongoDal and Logger.
 
         :param consuming_topic: the kafka consumption topic.
+        :param producing_topic: the kafka producing topic.
         :param index_name: the name to index in elastic.
         """
         self.consuming_topic = consuming_topic

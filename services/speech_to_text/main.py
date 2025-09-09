@@ -4,6 +4,7 @@ from services.speech_to_text.logic.logger import Logger
 
 
 def main():
+    """initialize the manager and run server"""
     logger = Logger.get_logger(name="speech_to_text")
     logger.info("speech to text started...")
     manager = Manager(

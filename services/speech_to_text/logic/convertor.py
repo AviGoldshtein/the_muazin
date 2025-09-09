@@ -8,7 +8,12 @@ class Convertor:
     def __init__(self):
         self.logger = Logger.get_logger(name=__name__)
 
-    def speech_to_text(self, audio_file_bytes):
+    def speech_to_text(self, audio_file_bytes: bytes) -> str | None:
+        """
+        convert an audio file to text.
+        :param audio_file_bytes: the bytes of the file.
+        :return: the converted text from the file.
+        """
         try:
             with NamedTemporaryFile(delete=False, suffix=".wav") as temp_file:
                 temp_file.write(audio_file_bytes)
@@ -23,6 +28,7 @@ class Convertor:
             self.logger.error(f"error while transcribing file: {temp_file.name},\n{e}")
 
     def _transcribe_audio(self, file_path, model_size="small", device="cuda", compute_type="float16"):
+        """the actual transcription is here"""
         model = WhisperModel(model_size, device=device, compute_type=compute_type)
 
         segments, info = model.transcribe(file_path)

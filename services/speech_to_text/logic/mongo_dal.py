@@ -15,7 +15,12 @@ class MongoDal:
         self.uri = conf.MONGO_URI
         self.logger = Logger.get_logger(name=__name__)
 
-    def fetch_file(self, file_id):
+    def fetch_file(self, file_id: str) -> bytes | None:
+        """
+        fetch a file from grid-fs by its id.
+        :param file_id: the id of the file.
+        :return: the bytes of the file.
+        """
         try:
             with MongoClient(self.uri) as client:
                 self.db = client[self.database]
