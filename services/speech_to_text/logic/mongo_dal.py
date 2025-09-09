@@ -1,6 +1,6 @@
 from pymongo import MongoClient
 import services.speech_to_text.config as conf
-# from services.speech_to_text.logic.logger import Logger
+from services.speech_to_text.logic.logger import Logger
 from gridfs import GridFS
 
 
@@ -13,7 +13,7 @@ class MongoDal:
         self.db = None
         self.database = conf.MONGO_DB
         self.uri = conf.MONGO_URI
-        # self.logger = Logger.get_logger(name=__name__)
+        self.logger = Logger.get_logger(name=__name__)
 
     def fetch_file(self, file_id):
         try:
@@ -21,6 +21,7 @@ class MongoDal:
                 self.db = client[self.database]
                 fs = GridFS(self.db)
                 grid_out = fs.get(file_id=file_id)
+                self.logger.info(f"successfully fetched file from db, file: {file_id}.")
                 return grid_out.read()
         except Exception as e:
-            print(f"error: {e}")
+            self.logger.error(f"error fetching file: {file_id},\n{e}.")
