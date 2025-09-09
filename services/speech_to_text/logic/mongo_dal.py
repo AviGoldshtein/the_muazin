@@ -1,9 +1,7 @@
 from pymongo import MongoClient
 import services.speech_to_text.config as conf
-from services.data_prossesor.logic.logger import Logger
-import pathlib
-from gridfs import GridFSBucket, GridFS
-from gridfs.errors import FileExists
+# from services.speech_to_text.logic.logger import Logger
+from gridfs import GridFS
 
 
 class MongoDal:
@@ -15,7 +13,7 @@ class MongoDal:
         self.db = None
         self.database = conf.MONGO_DB
         self.uri = conf.MONGO_URI
-        self.logger = Logger.get_logger(name=__name__)
+        # self.logger = Logger.get_logger(name=__name__)
 
     def fetch_file(self, file_id):
         try:

@@ -11,19 +11,11 @@ class Convertor:
 
         transcription_result = self._transcribe_audio(file_path=temp_file.name, device="cpu", compute_type="float32")
 
-        text = ""
-        for segment in transcription_result:
-            text += segment.text
-
         os.remove(temp_file.name)
-        return text
-
+        return "".join([segment.text for segment in transcription_result])
 
     def _transcribe_audio(self, file_path, model_size="small", device="cuda", compute_type="float16"):
-        # Initialize the Whisper model
         model = WhisperModel(model_size, device=device, compute_type=compute_type)
 
-        # Transcribe the audio file
-        print(file_path)
         segments, info = model.transcribe(file_path)
         return segments
