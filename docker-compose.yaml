@@ -51,6 +51,11 @@
           - elastic_data:/usr/share/elasticsearch/data
         networks:
           - muazin-net
+        healthcheck:
+          test: [ "CMD", "curl", "-f", "http://localhost:9200/_cluster/health" ]
+          interval: 10s
+          timeout: 5s
+          retries: 10
 
       muazin-kibana:
         image: docker.elastic.co/kibana/kibana:8.15.0
@@ -63,6 +68,65 @@
           - muazin-es
         networks:
           - muazin-net
+
+      data_loader_src:
+        build:
+          context: .
+          dockerfile: services/data_loader_src/Dockerfile
+        image: data_loader_src:latest
+        networks:
+          - muazin-net
+        environment:
+          - KAFKA_BOOTSTRAP=muazin-kafka:9092
+        depends_on:
+          muazin-es:
+            condition: service_healthy
+
+      data_prossesor:
+        build:
+          context: .
+          dockerfile: services/data_prossesor/Dockerfile
+        image: data_prossesor:latest
+        networks:
+          - muazin-net
+        environment:
+          - KAFKA_BOOTSTRAP=muazin-kafka:9092
+          - ELASTIC_URI=http://muazin-es:9200
+          - MONGO_URI=mongodb://muazin-mongo:27017
+          - MONGO_DB=mydb
+        depends_on:
+          muazin-es:
+            condition: service_healthy
+
+      speech_to_text:
+        build:
+          context: .
+          dockerfile: services/speech_to_text/Dockerfile
+        image: speech_to_text:latest
+        networks:
+          - muazin-net
+        environment:
+          - KAFKA_BOOTSTRAP=muazin-kafka:9092
+          - ELASTIC_URI=http://muazin-es:9200
+          - MONGO_URI=mongodb://muazin-mongo:27017
+          - MONGO_DB=mydb
+        depends_on:
+          muazin-es:
+            condition: service_healthy
+
+      hostility_classifier:
+        build:
+          context: .
+          dockerfile: services/hostility_classifier/Dockerfile
+        image: hostility_classifier:latest
+        networks:
+          - muazin-net
+        environment:
+          - KAFKA_BOOTSTRAP=muazin-kafka:9092
+          - ELASTIC_URI=http://muazin-es:9200
+        depends_on:
+          muazin-es:
+            condition: service_healthy
 
     volumes:
       elastic_data:
