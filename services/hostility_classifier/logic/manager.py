@@ -6,6 +6,13 @@ from services.shared.logger import Logger
 
 class Manager:
     def __init__(self, consuming_topic, index_name):
+        """
+        manager initialization with instances of
+        Classifier, ElasticConnector, and Logger.
+
+        :param consuming_topic: the kafka consumption topic.
+        :param index_name: the name to index in elastic.
+        """
         self.consuming_topic = consuming_topic
         self.index_name = index_name
         self.es_connector = ElasticConnector()
@@ -13,6 +20,11 @@ class Manager:
         self.logger = Logger.get_logger(name=__name__)
 
     def run(self):
+        """
+        start listening to the kafka topic,
+        and calculate for every file the bds percentage,
+        if it is bsd, and th threat level.
+        """
         self.logger.info(f"starting listening to topic: {self.consuming_topic}")
         events = Consumer.get_consumer_events(self.consuming_topic)
 

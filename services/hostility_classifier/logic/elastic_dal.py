@@ -30,6 +30,12 @@ class ElasticConnector:
             self.logger.error(f"{e}")
 
     def get_text_from(self, index_name: str ,file_id: str) -> str | None:
+        """
+        get the text from the elastic server by its id.
+        :param index_name: the index where it is stored.
+        :param file_id: the unique id.
+        :return: the text received from elastic.
+        """
         try:
             res = self.es.get(index=index_name ,id=file_id)
             return res['_source'].get("Transcription", None)

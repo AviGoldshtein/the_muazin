@@ -4,6 +4,7 @@ from services.shared.logger import Logger
 
 
 def main():
+    """initialize the manager and run server"""
     logger = Logger.get_logger("hostility_classifier")
     logger.info("hostility_classifier started...")
     manager = Manager(
