@@ -1,4 +1,4 @@
-from logic.manager import Manager
+from services.data_loader_src.logic.manager import Manager
 from services.shared.logger import Logger
 from services.shared.config import CONFIG
 
