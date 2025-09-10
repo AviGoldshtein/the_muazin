@@ -2,7 +2,7 @@ from services.speech_to_text.logic.consumer import Consumer
 from services.speech_to_text.logic.convertor import Convertor
 from services.speech_to_text.logic.mongo_dal import MongoDal
 from services.speech_to_text.logic.elastic_dal import ElasticConnector
-from services.speech_to_text.logic.logger import Logger
+from services.shared.logger import Logger
 from services.shared.producer import Producer
 
 

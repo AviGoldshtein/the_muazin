@@ -1,7 +1,8 @@
 from services.data_loader_src.logic.data_loader import DataLoader
 from services.data_loader_src.logic.meta_extractor import MetaExtractor
 from services.shared.producer import Producer
-from services.data_loader_src.logic.logger import Logger
+# from services.data_loader_src.logic.logger import Logger
+from services.shared.logger import Logger
 
 
 class Manager:

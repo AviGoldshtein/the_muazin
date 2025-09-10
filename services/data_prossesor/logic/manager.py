@@ -3,7 +3,7 @@ from services.data_prossesor.logic.elastic_dal import ElasticConnector
 from services.data_prossesor.logic.processor import Processor
 from services.data_prossesor.logic.mongo_dal import MongoDal
 from services.shared.producer import Producer
-from services.data_prossesor.logic.logger import Logger
+from services.shared.logger import Logger
 
 
 class Manager:

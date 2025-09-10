@@ -1,7 +1,7 @@
 import pathlib
 import os
 from services.data_loader_src.config import FILES_PATH
-from services.data_loader_src.logic.logger import Logger
+from services.shared.logger import Logger
 
 
 class DataLoader:

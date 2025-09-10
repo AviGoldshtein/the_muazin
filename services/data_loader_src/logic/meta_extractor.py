@@ -1,7 +1,7 @@
 from pathlib import Path
 import datetime
 from dateutil import parser
-from services.data_loader_src.logic.logger import Logger
+from services.shared.logger import Logger
 
 
 class MetaExtractor:

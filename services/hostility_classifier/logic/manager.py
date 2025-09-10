@@ -1,7 +1,7 @@
 from services.hostility_classifier.logic.consumer import Consumer
 from services.hostility_classifier.logic.elastic_dal import ElasticConnector
 from services.hostility_classifier.logic.classifier import Classifier
-from services.hostility_classifier.logic.logger import Logger
+from services.shared.logger import Logger
 
 
 class Manager:

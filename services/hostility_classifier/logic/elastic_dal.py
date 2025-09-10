@@ -1,6 +1,6 @@
 from elasticsearch import Elasticsearch, NotFoundError
 import services.hostility_classifier.config as conf
-from services.hostility_classifier.logic.logger import Logger
+from services.shared.logger import Logger
 
 
 class ElasticConnector:

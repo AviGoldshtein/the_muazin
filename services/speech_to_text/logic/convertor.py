@@ -1,6 +1,6 @@
 from faster_whisper import WhisperModel
 from tempfile import NamedTemporaryFile
-from services.speech_to_text.logic.logger import Logger
+from services.shared.logger import Logger
 import os
 
 

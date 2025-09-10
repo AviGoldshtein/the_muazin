@@ -1,5 +1,5 @@
 from services.data_prossesor.logic.manager import Manager
-from services.data_prossesor.logic.logger import Logger
+from services.shared.logger import Logger
 import services.data_prossesor.config as conf
 
 

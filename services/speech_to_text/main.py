@@ -1,6 +1,6 @@
 from services.speech_to_text.logic.manager import Manager
 import services.speech_to_text.config as conf
-from services.speech_to_text.logic.logger import Logger
+from services.shared.logger import Logger
 
 
 def main():

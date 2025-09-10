@@ -1,6 +1,6 @@
 from elasticsearch import Elasticsearch, NotFoundError
 import services.speech_to_text.config as conf
-from services.speech_to_text.logic.logger import Logger
+from services.shared.logger import Logger
 
 
 class ElasticConnector:

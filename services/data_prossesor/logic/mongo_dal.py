@@ -1,6 +1,6 @@
 from pymongo import MongoClient
 import services.data_prossesor.config as conf
-from services.data_prossesor.logic.logger import Logger
+from services.shared.logger import Logger
 import pathlib
 from gridfs import GridFSBucket
 from gridfs.errors import FileExists
