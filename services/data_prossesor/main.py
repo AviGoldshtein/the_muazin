@@ -1,15 +1,15 @@
 from services.data_prossesor.logic.manager import Manager
 from services.shared.logger import Logger
-import services.data_prossesor.config as conf
+from services.shared.config import CONFIG
 
 
 def main():
     """initialize the manager and run server"""
     logger = Logger.get_logger(name="processor")
     logger.info("data processor started...")
-    manager = Manager(consuming_topic=conf.CONSUMING_TOPIC_DATA_PROCESSOR,
-                      producing_topic=conf.PRODUCING_TOPIC_DATA_PROCESSOR,
-                      index_name=conf.INDEX_NAME)
+    manager = Manager(consuming_topic=CONFIG['data_prossesor']['consuming_topic'],
+                      producing_topic=CONFIG['data_prossesor']['producing_topic'],
+                      index_name=CONFIG['elastic_search']['index'])
     manager.run()
 
 

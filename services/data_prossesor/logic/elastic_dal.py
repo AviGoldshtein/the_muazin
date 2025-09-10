@@ -1,11 +1,11 @@
 from elasticsearch import Elasticsearch
-import services.data_prossesor.config as conf
+from services.shared.config import CONFIG
 from services.shared.logger import Logger
 
 
 class ElasticConnector:
     def __init__(self):
-        self.es = Elasticsearch(conf.ELASTIC_URI)
+        self.es = Elasticsearch(CONFIG['elastic_search']['uri'])
         self.logger = Logger.get_logger(name=__name__)
 
     def create_index_and_mapping_if_not_exist(self, index_name: str):

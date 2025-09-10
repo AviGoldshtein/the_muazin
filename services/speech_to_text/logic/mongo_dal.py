@@ -1,5 +1,5 @@
 from pymongo import MongoClient
-import services.speech_to_text.config as conf
+from services.shared.config import CONFIG
 from services.shared.logger import Logger
 from gridfs import GridFS
 
@@ -11,8 +11,8 @@ class MongoDal:
         and the name of the collection to work with
         """
         self.db = None
-        self.database = conf.MONGO_DB
-        self.uri = conf.MONGO_URI
+        self.database = CONFIG['mongo']['db']
+        self.uri = CONFIG['mongo']['uri']
         self.logger = Logger.get_logger(name=__name__)
 
     def fetch_file(self, file_id: str) -> bytes | None:

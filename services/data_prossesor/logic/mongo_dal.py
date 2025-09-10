@@ -1,5 +1,5 @@
 from pymongo import MongoClient
-import services.data_prossesor.config as conf
+from services.shared.config import CONFIG
 from services.shared.logger import Logger
 import pathlib
 from gridfs import GridFSBucket
@@ -13,8 +13,8 @@ class MongoDal:
         and the name of the collection to work with
         """
         self.db = None
-        self.database = conf.MONGO_DB
-        self.uri = conf.MONGO_URI
+        self.database = CONFIG['mongo']['db']
+        self.uri = CONFIG['mongo']['uri']
         self.logger = Logger.get_logger(name=__name__)
 
     def insert_file(self, metadata, file_id):

@@ -1,13 +1,13 @@
 import pathlib
 import os
-from services.data_loader_src.config import FILES_PATH
+from services.shared.config import CONFIG
 from services.shared.logger import Logger
 
 
 class DataLoader:
     def __init__(self):
         """initialize with the path of the files to work with."""
-        self.files_path = FILES_PATH
+        self.files_path = CONFIG['data_loader_src']['files_path']
         self.logger = Logger.get_logger(name=__name__)
 
     def list_fils(self) -> list[pathlib.Path]:

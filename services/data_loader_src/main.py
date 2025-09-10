@@ -1,13 +1,13 @@
 from logic.manager import Manager
 from services.shared.logger import Logger
-import config
+from services.shared.config import CONFIG
 
 
 def main():
     """initialize the manager and run server"""
     logger = Logger.get_logger(name="data_loader")
     logger.info("data loader started...")
-    manager = Manager(config.PRODUCING_TOPIC_DATA_LOADER)
+    manager = Manager(producing_topic=CONFIG['data_loader_src']['producing_topic'])
     manager.run()
 
 

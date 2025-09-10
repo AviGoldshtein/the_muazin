@@ -34,4 +34,3 @@ CONFIG = {
         "group_id": "hostility-classifier"
     }
 }
-
