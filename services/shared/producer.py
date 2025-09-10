@@ -10,6 +10,7 @@ class Producer:
         bootstrap_server = CONFIG['kafka']['kafka_boostrap']
         self.logger = Logger.get_logger(name=__name__)
         self.__producer = KafkaProducer(bootstrap_servers=[bootstrap_server],
+                                        api_version=(0, 11, 5),
                                          value_serializer=lambda x:
                                          json.dumps(x).encode('utf-8')
                                         )
