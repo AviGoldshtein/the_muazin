@@ -85,3 +85,10 @@ docker run --name data_prossesor --network muazin-net -d -e "KAFKA_BOOTSTRAP=mua
 docker run --name speech_to_text --network muazin-net -d -e "KAFKA_BOOTSTRAP=muazin-kafka:9092" -e "ELASTIC_URI=http://muazin-es:9200" -e "MONGO_URI=mongodb://muazin-mongo:27017" -e "MONGO_DB=mydb" speech_to_text:latest
 docker run --name hostility_classifier --network muazin-net -d -e "KAFKA_BOOTSTRAP=muazin-kafka:9092" -e "ELASTIC_URI=http://muazin-es:9200" hostility_classifier:latest
 ```
+
+---
+
+## Systemic considerations
+
+- the reason of uploading the files before transcribe them is: the process of transcribing is hard and long, and by the time of processing the other metadata and the file itself can be available.
+- the calculation of the bds works like that: it extracts the percentage of the high hostile words in the file, and then the percentage of the low hostile words. obviously if the parentage of the high is 100 it can't be more, and if the low will get 100% it will be divided by 2 and it will get 50%, because its weight compared to the high is a half. for example: 50% of the words in the text matched high hostile words, and 50% matched low, the result will be 75%. # 50 + (50 / 2)
