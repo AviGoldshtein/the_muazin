@@ -17,7 +17,7 @@ class Extractor:
         with open(file_path, mode="r", encoding="utf-8") as f:
             encoded_wors_str = f.read()
             decoded_words_str = self._extractBase64(encoded_wors_str)
-            high_hostility_expressions_list = decoded_words_str.split(sep=",")
+            high_hostility_expressions_list = decoded_words_str.lower().split(sep=",")
         return high_hostility_expressions_list
 
 

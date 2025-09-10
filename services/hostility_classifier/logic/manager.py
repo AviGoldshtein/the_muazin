@@ -21,12 +21,13 @@ class Manager:
             if text:
                 bds_percent = self.classifier.calculate_bds_percent(text) # a number 0 / 100
                 is_bds = self.classifier.decide_is_bds(bds_percent) # True / False
-                bds_threat_level = self.classifier.classify_bds_threat_level(bds_percent, is_bds) # "medium" / "high" / "none"
+                bds_threat_level = self.classifier.classify_bds_threat_level(bds_percent) # "medium" / "high" / "none"
 
                 new_fields = {
                     "bds_percent": bds_percent,
                     "is_bds": is_bds,
                     "bds_threat_level": bds_threat_level
                 }
+                print(f"new fields: {new_fields}")
 
                 self.es_connector.update_meta_on_file(index_name=self.index_name, file_id=file_id, new_fields=new_fields)

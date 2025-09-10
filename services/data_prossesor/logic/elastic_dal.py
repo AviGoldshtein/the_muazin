@@ -19,7 +19,10 @@ class ElasticConnector:
                 'File_size': {'type': 'integer'},
                 'File_name': {'type': 'text'},
                 'Creation_time': {'type': 'date'},
-                'Transcription': {'type': 'text'}
+                'Transcription': {'type': 'text'},
+                'bds_percent' : {'type': 'integer'},
+                'is_bds': {'type': 'boolean'},
+                'bds_threat_level': {'type': 'keyword'}
             }
         }
         if not self.es.indices.exists(index=index_name):
