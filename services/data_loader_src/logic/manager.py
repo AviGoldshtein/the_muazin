@@ -1,6 +1,6 @@
 from services.data_loader_src.logic.data_loader import DataLoader
 from services.data_loader_src.logic.meta_extractor import MetaExtractor
-from services.data_loader_src.logic.producer import Producer
+from services.shared.producer import Producer
 from services.data_loader_src.logic.logger import Logger
 
 

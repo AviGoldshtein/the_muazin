@@ -1,13 +1,13 @@
 from kafka import KafkaProducer
-from services.data_loader_src import config
-from services.data_loader_src.logic.logger import Logger
+from services.shared.config import CONFIG
+from services.shared.logger import Logger
 import json
 
 
 class Producer:
     def __init__(self):
         """initialize with a KafkaProducer object"""
-        bootstrap_server = config.KAFKA_BOOTSTRAP
+        bootstrap_server = CONFIG['kafka']['kafka_boostrap']
         self.logger = Logger.get_logger(name=__name__)
         self.__producer = KafkaProducer(bootstrap_servers=[bootstrap_server],
                                          value_serializer=lambda x:
