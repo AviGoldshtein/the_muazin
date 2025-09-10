@@ -31,7 +31,7 @@ class Manager:
         then transcribe it to text,
         then update the metadata on the file in elastic search.
         """
-        self.logger.info("starting listening...")
+        self.logger.info(f"starting listening to topic: {self.consumption_topic}")
         events = Consumer.get_consumer_events(self.consumption_topic)
 
         for event in events:

@@ -1,6 +1,7 @@
 from services.hostility_classifier.logic.consumer import Consumer
 from services.hostility_classifier.logic.elastic_dal import ElasticConnector
 from services.hostility_classifier.logic.classifier import Classifier
+from services.hostility_classifier.logic.logger import Logger
 
 
 class Manager:
@@ -9,13 +10,15 @@ class Manager:
         self.index_name = index_name
         self.es_connector = ElasticConnector()
         self.classifier = Classifier()
+        self.logger = Logger.get_logger(name=__name__)
 
     def run(self):
+        self.logger.info(f"starting listening to topic: {self.consuming_topic}")
         events = Consumer.get_consumer_events(self.consuming_topic)
 
         for event in events:
             file_id = event.value['file_id']
-            print(file_id)
+            self.logger.info(f"received a new file: {file_id}")
 
             text = self.es_connector.get_text_from(index_name=self.index_name, file_id=file_id)
             if text:

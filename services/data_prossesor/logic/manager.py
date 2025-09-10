@@ -32,7 +32,7 @@ class Manager:
         and insert every file to mongo,
         then index it to elastic search.
         """
-        self.logger.info(f"started listening to new events of topic {self.consuming_topic}.")
+        self.logger.info(f"started listening to topic: {self.consuming_topic}.")
         self.es_connector.create_index_and_mapping_if_not_exist(index_name=self.index_name)
         events = Consumer.get_consumer_events(self.consuming_topic)
 
